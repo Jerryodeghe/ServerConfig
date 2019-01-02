@@ -164,7 +164,7 @@ Exit nano and:
 to recompile and add the aliases to your server. <br />
 To see this in action, type `pam` while in your project directory and see `php artisan migrate` run.
 
-1. **INSTALL REDIS**  <br />  
+2. **INSTALL REDIS**  <br />  
 Get up to date:
    - `sudo apt-get update` 
    - `sudo apt-get install build-essential tcl` <br />
@@ -214,5 +214,23 @@ Create a redis user:
    - `sudo systemctl status redis` <br />
 	To test again:
    - `sudo systemctl restart redis` <br />
-	Enable to start at boot: <br />
-   - `sudo systemctl enable redis`
+	Enable to start at boot:
+	- `sudo systemctl enable redis`
+3. **INSTALL PHPREDISADMIN**  <br />  
+To get an admin panel for your redis instances, you need a script just like `phpmyadmin`. Its aptly named `phpredisadmin` <br />
+   - Create an empty directory outside your projects home, eg: `/home/redis` just like you did for `phpmyadmin` <br />
+Again, symlink this link into your projects public directory:
+  - `sudo ln -s /home/redis/ /home/project-name/public_html/public` <br />
+Then go to your project directory (where your vendor folder is, e.g /home/buzz/public_html)
+And run: <br />
+`composer create-project -s dev erik-dubbelboer/php-redis-admin /home/redis` <br />
+**SET UP SECURITY** <br />
+    - Go to:<br />
+`cd /home/redis/includes` <br />
+and copy config.sample.inc.php into config.inc.php <br />
+`cp -R config.sample.inc.php config.inc.php` <br />
+    Open it and uncomment the 'login' array, then add/set the password, username.
+    - `nano config.inc.php` <br />
+    To get a form based login, change the `cookie_auth` value to:
+    - `cookie_auth=> true`<br />
+   **Thats it! Access your panel at: your-ip/redis**
