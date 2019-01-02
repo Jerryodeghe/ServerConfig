@@ -131,35 +131,88 @@ And edit as appropriate, e g:
 ## OPTIONAL SETUPS
 1. **Add bash aliases for shortcuts**  <br />  
    - Go to ` cd ~` and check if `.aliases` file is already on the server. To check, especially since this is a hidden file, simply `ls -A`
-    -`nano .aliases` and add these shortcuts, one per line. You can add as many as possible:
-    - `alias par='php artisan route:list'`
-    - `alias pam='php artisan migrate'`
-    - `alias pamroll='php artisan migrate:rollback'`
-    - `alias pamref='php artisan migrate:refresh'`
-    - `alias pa='php artisan $*'`
-    - `alias mod='php artisan make:model $*'`
-    - `alias mig='php artisan make:migration $*'`
-    - `alias pat='php artisan tinker'`
-    - `alias con='php artisan make:controller $* '`
-    - `alias g.='git add .'`
-    - `alias gl='git log'`
-    - `alias gs='git status'`
-    - `alias gc='git commit -m $*'`
-    - `alias .='clear'`
-    - `alias fresh='php artisan migrate:fresh'`
-    - `alias refresh='php artisan migrate:refresh --seed'`
-    - `alias restart='service apache2 restart'`
-    - `alias dump='composer dump-autoload'`
-    -  `alias home='/home/MY-PROJECT/public_html/'`
-    - `alias cache='php artisan config:cache'`
-    - `alias ccache='php artisan config:clear'`
-    - `alias clearlog='truncate -s 0   /home/buzzwords/public_html/storage/logs/laravel.log'`
-    - `alias unalias='alias /d $1'` <br />
+   -`nano .aliases` and add these shortcuts, one per line. You can add as many as possible:
+  - `alias par='php artisan route:list'`
+  - `alias pam='php artisan migrate'`
+  - `alias pamroll='php artisan migrate:rollback'`
+  - `alias pamref='php artisan migrate:refresh'`
+  - `alias pa='php artisan $*'`
+  - `alias mod='php artisan make:model $*'`
+  - `alias mig='php artisan make:migration $*'`
+  - `alias pat='php artisan tinker'`
+  - `alias con='php artisan make:controller $* '`
+  - `alias g.='git add .'`
+  - `alias gl='git log'`
+  - `alias gs='git status'`
+  - `alias gc='git commit -m $*'`
+  - `alias .='clear'`
+  - `alias fresh='php artisan migrate:fresh'`
+  - `alias refresh='php artisan migrate:refresh --seed'`
+  - `alias restart='service apache2 restart'`
+  - `alias dump='composer dump-autoload'`
+  -  `alias home='/home/MY-PROJECT/public_html/'`
+  - `alias cache='php artisan config:cache'`
+  - `alias ccache='php artisan config:clear'`
+  - `alias clearlog='truncate -s 0   /home/buzzwords/public_html/storage/logs/laravel.log'`
+  - `alias unalias='alias /d $1'`
 **Edit bashrc**
-    - `nano ~/.bashrc` <br />
-	    add as the first line: <br />
-    - `. ~/.aliases` <br />
-   Exit nano and:
-    - `source .aliases` <br />
-    to recompile and add the aliases to your server. <br />
-   To see this in action, type `pam` while in your project directory and see `php artisan migrate` run.
+  - `nano ~/.bashrc` <br />
+	add as the first line: <br />
+ - `. ~/.aliases` 
+Exit nano and:
+- `source .aliases` <br />
+to recompile and add the aliases to your server. <br />
+To see this in action, type `pam` while in your project directory and see `php artisan migrate` run.
+
+1. **INSTALL REDIS**  <br />  
+Get up to date:
+   - `sudo apt-get update` 
+   - `sudo apt-get install build-essential tcl` <br />
+ Download to a temporary location:
+   - `cd /tmp`
+   - `curl -O http://download.redis.io/redis-stable.tar.gz
+tar xzvf redis-stable.tar.gz`
+   - `cd redis-stable`
+   - `make`
+   - `make test`
+   - `sudo make install`
+   - `sudo mkdir /etc/redis`
+   - `sudo cp /tmp/redis-stable/redis.conf /etc/redis` <br />
+	**Change few settings:**
+	`sudo nano /etc/redis/redis.conf` <br />
+	Uncomment `supervised` and change it to :
+  - `supervised systemd` <br />
+  Also uncomment `dir` and change it to:
+  - `dir /var/lib/redis` <br />
+	Save and close
+**Create a systemd unit file:**
+  - `sudo nano /etc/systemd/system/redis.service` <br />
+  And add the following: <br />
+
+    [Unit] <br />
+    Description=Redis In-Memory Data Store<br />
+    After=network.target<br /><br />
+    [Service]<br />
+    User=redis<br />
+    Group=redis<br />
+    ExecStart=/usr/local/bin/redis-server /etc/redis/redis.conf<br />
+    ExecStop=/usr/local/bin/redis-cli shutdown<br />
+    Restart=always<br /><br />
+    
+    [Install]<br />
+    WantedBy=multi-user.target<br />
+
+**Save and close** <br />
+Next, create the dir specified above:
+   - `sudo mkdir /var/lib/redis` <br />
+Create a redis user:
+   - `sudo adduser --system --group --no-create-home redis`
+   - `sudo chown redis:redis /var/lib/redis`
+   - `sudo chmod 770 /var/lib/redis` <br />
+ Start redis service:
+   - `sudo systemctl start redis`
+   - `sudo systemctl status redis` <br />
+	To test again:
+   - `sudo systemctl restart redis` <br />
+	Enable to start at boot: <br />
+   - `sudo systemctl enable redis`
