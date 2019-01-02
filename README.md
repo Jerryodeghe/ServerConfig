@@ -1,3 +1,4 @@
+
 ## ServerConfig
 ## Server Configuration Steps for Ubuntu 16.04.5
 
@@ -100,13 +101,31 @@ Logout of the remote server and get into your local project directory. And:
     - `$cfg['blowfish_secret']='sometthing random'`
 **Create another user:** <br />
 To manage your phpmyadmin account, you need to quickly whip up a database and its user:
-   - `sudo mysql -p -u root`
-   - `CREATE USER 'pmauser'@'%' IDENTIFIED BY 'password_here';`
-   - `GRANT ALL PRIVILEGES ON *.* TO 'pmauser'@'%' WITH GRANT OPTION;` <br />
+    - `sudo mysql -p -u root`
+    - `CREATE USER 'pmauser'@'%' IDENTIFIED BY 'password_here';`
+    - `GRANT ALL PRIVILEGES ON *.* TO 'pmauser'@'%' WITH GRANT OPTION;` <br />
    That's it. Done. Now login to `http://your-domain/phpmyadmin`with your newly created credentials.
-9. **CREATE A USER AND A DB FOR YOUR LARAVEL PROJECT**  <br />
+10. **CREATE A USER AND A DB FOR YOUR LARAVEL PROJECT**  <br />
 Now that you have your phpmyadmin set up, its time to create a user and a db for your project. Sure its likely you have one already set up locally, but this is your production server.<br />
    Go to virtualmin and create a brand new database user, with localhost host and give the user every available priviledge. 
-   - `https://your-ip:10000//mysql/edit_user.cgi?new=1&xnavigation=1` <br />
-   Then attach the user to a database of your choice (or even create a new database)
-   - `https://your-ip:10000/mysql/list_dbs.cgi?xnavigation=1`
+    - `https://your-ip:10000//mysql/edit_user.cgi?new=1&xnavigation=1` <br />
+    Then attach the user to a database of your choice (or even create a new database)
+    - `https://your-ip:10000/mysql/list_dbs.cgi?xnavigation=1`
+11. **EDIT YOUR .ENV FILE**
+Inside your project root folder, 
+    - `ls -A ` <br />
+To show a list of all your files including the hidden ones. You would notice that there is no .env present. Yes, its available locally, but Laravel adds it in the `gitignore` file which means it was ignored by git when you were moving your project earlier. This is actually a good thing, as it means you can safely add some sensitive info to your local .env without the fear of getting to production or even available on your remote git client. <br /> To create a production copy of your .env file simply:
+    - `cp -R .env.example .env` <br />
+    - `nano .env`
+And edit as appropriate, e g:
+    - `APP_ENV=production` 
+    - `APP_DEBUG=false`
+    - `DB_DATABASE=yourdb`
+    - `DB_PASSWORD=yourpsw`
+  You now need to generate an APP:KEY and cache your config:
+    - `php artisan key:generate`
+    - `php artisan config:cache` <br />
+   And lastly, migrate:
+    - `php artisan migrate` <br />
+  
+## OPTIONAL SETUPS
