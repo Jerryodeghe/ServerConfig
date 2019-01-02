@@ -12,7 +12,7 @@
    `ssh root@ip`
      - **Update the sshd config file and prevent the use of password in login**
      - `cd /etc/ssh`
-     - `nano sshd_config`
+     - `nano sshd_config` <br /><br />
      __*Change\Add:*__
      - `PasswordAuthentication no`
      - `AllowUsers root`
