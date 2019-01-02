@@ -1,9 +1,8 @@
-## ServerConfig
-## Server Configuration Steps for Ubuntu 16.04.5
+## Laravel ~ 5.6 Server Configuration Settings for Ubuntu 16.04.5
 
  1. **Setup SSH** 
-    - **Remove old keys after server re-installation:** 
-	   `ssh-keygen -R your-ip-address`
+    - **Remove old keys after server re-installation:** <br />
+	   `ssh-keygen -R your-ip-address`<br />
       **Copy the public keys to the server:** <br />
     `cat ~/.ssh/id_rsa.pub | ssh username@remote_host "mkdir -p ~/.ssh && touch 	~/.ssh/authorized_keys && chmod -R go= ~/.ssh && cat >> ~/.ssh/authorized_keys"`
     - **Access the server with:** <br />
