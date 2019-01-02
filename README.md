@@ -1,6 +1,5 @@
 
-## ServerConfig
-## Server Configuration Steps for Ubuntu 16.04.5
+## Laravel ~ 5.6 Server Config for Ubuntu 16.04.5
 
  1. **Setup SSH** 
    - **Remove old keys after server re-installation:** 
