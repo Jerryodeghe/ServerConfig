@@ -101,31 +101,65 @@ Logout of the remote server and get into your local project directory. And:
     - `$cfg['blowfish_secret']='sometthing random'`
 **Create another user:** <br />
 To manage your phpmyadmin account, you need to quickly whip up a database and its user:
-    - `sudo mysql -p -u root`
-    - `CREATE USER 'pmauser'@'%' IDENTIFIED BY 'password_here';`
-    - `GRANT ALL PRIVILEGES ON *.* TO 'pmauser'@'%' WITH GRANT OPTION;` <br />
+   - `sudo mysql -p -u root`
+   - `CREATE USER 'pmauser'@'%' IDENTIFIED BY 'password_here';`
+   - `GRANT ALL PRIVILEGES ON *.* TO 'pmauser'@'%' WITH GRANT OPTION;` <br />
    That's it. Done. Now login to `http://your-domain/phpmyadmin`with your newly created credentials.
 10. **CREATE A USER AND A DB FOR YOUR LARAVEL PROJECT**  <br />
 Now that you have your phpmyadmin set up, its time to create a user and a db for your project. Sure its likely you have one already set up locally, but this is your production server.<br />
    Go to virtualmin and create a brand new database user, with localhost host and give the user every available priviledge. 
-    - `https://your-ip:10000//mysql/edit_user.cgi?new=1&xnavigation=1` <br />
-    Then attach the user to a database of your choice (or even create a new database)
-    - `https://your-ip:10000/mysql/list_dbs.cgi?xnavigation=1`
-11. **EDIT YOUR .ENV FILE**
+   - `https://your-ip:10000//mysql/edit_user.cgi?new=1&xnavigation=1` <br />
+   Then attach the user to a database of your choice (or even create a new database)
+   - `https://your-ip:10000/mysql/list_dbs.cgi?xnavigation=1`
+11. **EDIT YOUR .ENV FILE**  <br />  
 Inside your project root folder, 
-    - `ls -A ` <br />
+   - `ls -A ` <br />
 To show a list of all your files including the hidden ones. You would notice that there is no .env present. Yes, its available locally, but Laravel adds it in the `gitignore` file which means it was ignored by git when you were moving your project earlier. This is actually a good thing, as it means you can safely add some sensitive info to your local .env without the fear of getting to production or even available on your remote git client. <br /> To create a production copy of your .env file simply:
-    - `cp -R .env.example .env` <br />
-    - `nano .env`
+ - `cp -R .env.example .env` <br />
+ - `nano .env`
 And edit as appropriate, e g:
-    - `APP_ENV=production` 
-    - `APP_DEBUG=false`
-    - `DB_DATABASE=yourdb`
-    - `DB_PASSWORD=yourpsw`
+ - `APP_ENV=production` 
+ - `APP_DEBUG=false`
+ - `DB_DATABASE=yourdb`
+ - `DB_PASSWORD=yourpsw`
   You now need to generate an APP:KEY and cache your config:
-    - `php artisan key:generate`
-    - `php artisan config:cache` <br />
+   - `php artisan key:generate`
+   - `php artisan config:cache` <br />
    And lastly, migrate:
-    - `php artisan migrate` <br />
+   - `php artisan migrate` <br />
   
 ## OPTIONAL SETUPS
+1. **Add bash aliases for shortcuts**  <br />  
+   - Go to ` cd ~` and check if `.aliases` file is already on the server. To check, especially since this is a hidden file, simply `ls -A`
+    -`nano .aliases` and add these shortcuts, one per line. You can add as many as possible:
+    - `alias par='php artisan route:list'`
+    - `alias pam='php artisan migrate'`
+    - `alias pamroll='php artisan migrate:rollback'`
+    - `alias pamref='php artisan migrate:refresh'`
+    - `alias pa='php artisan $*'`
+    - `alias mod='php artisan make:model $*'`
+    - `alias mig='php artisan make:migration $*'`
+    - `alias pat='php artisan tinker'`
+    - `alias con='php artisan make:controller $* '`
+    - `alias g.='git add .'`
+    - `alias gl='git log'`
+    - `alias gs='git status'`
+    - `alias gc='git commit -m $*'`
+    - `alias .='clear'`
+    - `alias fresh='php artisan migrate:fresh'`
+    - `alias refresh='php artisan migrate:refresh --seed'`
+    - `alias restart='service apache2 restart'`
+    - `alias dump='composer dump-autoload'`
+    -  `alias home='/home/MY-PROJECT/public_html/'`
+    - `alias cache='php artisan config:cache'`
+    - `alias ccache='php artisan config:clear'`
+    - `alias clearlog='truncate -s 0   /home/buzzwords/public_html/storage/logs/laravel.log'`
+    - `alias unalias='alias /d $1'` <br />
+**Edit bashrc**
+    - `nano ~/.bashrc` <br />
+	    add as the first line: <br />
+    - `. ~/.aliases` <br />
+   Exit nano and:
+    - `source .aliases` <br />
+    to recompile and add the aliases to your server. <br />
+   To see this in action, type `pam` while in your project directory and see `php artisan migrate` run.
