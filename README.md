@@ -23,7 +23,7 @@
    
 3. **Install newer version of PHP:** 
    - `add-apt-repository ppa:ondrej/php && apt-get update`
-   - `apt-get install php7.3 php7.3-mysql php7.3-cgi php7.3-cli php7.3-mbstring`
+   - `apt-get install php7.3 php7.3-mysql php7.3-cgi php7.3-cli php7.3-mbstring sudo php7.3-xml`
    - Sync up your server and bring virtualmin up to date by going to `System Settings -> Re-Check Config`
 4. **Create a Virtualmin Server for your project:** 
 You will need a virtualmin ***virtual*** server for your project to get started. This will install your project's Home Directory, DNS, File Manager, Mails, etc. ***Home directory is usually at: /home/projectname/public_html***
@@ -233,3 +233,9 @@ and copy config.sample.inc.php into config.inc.php <br />
     To get a form based login, change the `cookie_auth` value to:
     - `cookie_auth=> true`<br />
    **Thats it! Access your panel at: your-ip/redis**
+3. **Use Faker in production**  <br />
+I have found that by default, the `composer install --no-dev ` command will ignore all developmental packages like phpunit, faker, etc. But if for whatever reason you need to use the faker package in production, then you need to:<br />
+    - Move `"fzaninotto/faker": "^your-version-digit",` away from the `require-dev` array to the `require` array.
+    - Push to the server and run `composer update --no-dev` on the server.
+    - If it asks for any php installations, as required by even your development packages, give it. The reason is, even though you use 	the `--no-dev` flag, composer would still require that all php extensions required by all the packages are duly installed, again, even though you will not be needing them in production. This could be ignored when you ran `composer install` but not when you ran `composer update`. Weird.
+    
