@@ -233,7 +233,7 @@ and copy config.sample.inc.php into config.inc.php <br />
     To get a form based login, change the `cookie_auth` value to:
     - `cookie_auth=> true`<br />
    **Thats it! Access your panel at: your-ip/redis**
-3. **Use Faker in production**  <br />
+4. **Use Faker in production**  <br />
 I have found that by default, the `composer install --no-dev ` command will ignore all developmental packages like phpunit, faker, etc. But if for whatever reason you need to use the faker package in production, then you need to:<br />
     - Move `"fzaninotto/faker": "^your-version-digit",` away from the `require-dev` array to the `require` array.
     - Push to the server and run `composer update --no-dev` on the server.
