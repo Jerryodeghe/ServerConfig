@@ -17,6 +17,7 @@
      - Add the public key to the authorized_file on the server by:
      	- `cd /~/.ssh`
 	- `nano authorized_keys`
+	- Restart:  sudo /etc/init.d/ssh start
 	- Exit. And,
 	- Add the Private key to your putty client. Make sure to add the 'Auto-login username' in the Data tab, under Connection.
 	- Try to login. You should be automatically logged in.
