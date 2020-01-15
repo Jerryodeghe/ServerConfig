@@ -119,6 +119,10 @@ To manage your phpmyadmin account, you need to quickly whip up a database and it
    That's it. Done. Now login to `http://your-domain/phpmyadmin`with your newly created credentials.
 10. **CREATE A USER AND A DB FOR YOUR LARAVEL PROJECT**  <br />
 Now that you have your phpmyadmin set up, its time to create a user and a db for your project. Sure its likely you have one already set up locally, but this is your production server.<br />
+===This part may no longer be necessary====================================
+Looks like Virtualmin would have created both the database and its user during installation.
+If the links below does not work, check your the "Edit Databases" link on Virtualmin, click THE "Passwords" Tab above it. Click the key icon to reveal the generated password for this database user. The user carries the name of the database. Now, if phpmyadmin does not recognze this, go to its Priviledges, and make sure the user has 'localhost' as the host and that the user has 'All Priviledges'. Give it, if it doesnt already have it.
+=============================================================================
    Go to virtualmin and create a brand new database user, with localhost host and give the user every available priviledge. 
    - `https://your-ip:10000//mysql/edit_user.cgi?new=1&xnavigation=1` <br />
    Then attach the user to a database of your choice (or even create a new database)
