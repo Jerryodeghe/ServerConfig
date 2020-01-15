@@ -154,6 +154,14 @@ And edit as appropriate, e g:
   - `DocumentRoot /home/scms/public_html/public`
   - Press "Click and Save" and restart your apache like so:
   - `/etc/init.d/apache2 restart`
+  
+  13. **Add SSL**  <br />  
+  	- To add Lets Encrtpt certificates, first make sure that your virtual server has 'Apache SSL website enabled'. Check this by Clicking on 'Edit Virtual Server and clicking expanding "Enabled Features". If SSL is not enabled, do so.
+	
+	- Now, go to "Server Configuration -> SSL Certificate"
+	- Click on the "Lets Encrypt". If you see an error that says something like: "The Let's Encrypt client command letsencrypt or certbot was not found on your system", simply add it like so: <br />
+	`apt-get -y install certbot`, 
+	- 
 ## OPTIONAL SETUPS
 1. **Add bash aliases for shortcuts**  <br />  
    - Go to ` cd ~` and check if `.aliases` file is already on the server. To check, especially since this is a hidden file, simply `ls -A`
