@@ -100,16 +100,17 @@ Logout of the remote server and get into your local project directory. And:
     Unzip
     - `unzip phpMyAdmin-4.8.4-all-languages.zip` <br />
     Change the name to something easily remembered like: `phpmyadmin`
-    - `cp -R phpMyAdmin-4.8.4-all-languages phpmyadmin` <br />
+    - `cp -R phpMyAdmin-4.8.4-all-languages phpmyadmin` (remember to use something different, like pMYadmin, for security reasons)<br />
     Its location is at `/home/phpmyadmin`. <br /><br />
     Great, but it serves no useful purpose if it just stays there. <br />
     What you can do is to symlink it to the public folder of your project. And since this is Laravel app, it will be `/home/my-cool-app/public_html/public`. Like this: <br />
     - `sudo ln -s /home/phpmyadmin/ /home/my-cool-project/public_html/public`<br />
     With that, phpmyadmin can now be accessed using: `http://my-cool-app/phpmyadmin`<br />
     Next, copy and amend the sampled config file:<br />
+    - cd into the phpmyadmin directory and:
     - `cp -R config.sample.inc.php config.inc.php` <br />
     Add something random to `$cfg['blowfish_secret']` property,like this:<br />
-    - `$cfg['blowfish_secret']='sometthing random'`
+    - `$cfg['blowfish_secret']='sometthing random'`<br />
 **Create another user:** <br />
 To manage your phpmyadmin account, you need to quickly whip up a database and its user:
    - `sudo mysql -p -u root`
