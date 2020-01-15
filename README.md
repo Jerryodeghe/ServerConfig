@@ -186,8 +186,9 @@ Get up to date:
    - `sudo apt-get install build-essential tcl` <br />
  Download to a temporary location:
    - `cd /tmp`
-   - `curl -O http://download.redis.io/redis-stable.tar.gz
-tar xzvf redis-stable.tar.gz`
+   - `curl -O http://download.redis.io/redis-stable.tar.gz tar xzvf redis-stable.tar.gz`
+  - "If it complains that the url cant be resolved, ignore. It has actually been downloaded. Just do this to untar/unzip":
+  	- `tar xzvf redis-stable.tar.gz`
    - `cd redis-stable`
    - `make`
    - `make test`
