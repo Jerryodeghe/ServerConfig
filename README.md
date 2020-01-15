@@ -8,7 +8,18 @@
      -  **Copy the public keys to the server:**
 `   cat ~/.ssh/id_rsa.pub | ssh username@remote_host "mkdir -p ~/.ssh && touch 	~/.ssh/authorized_keys && chmod -R go= ~/.ssh && cat >> ~/.ssh/authorized_keys"`
 
-     - **Access the server with:** 
+     - **Access the server with: ssh root@ip-address** 
+     
+     - **Alternatively**
+     You can manually install the rsa keys into the server.
+     - Generate both the public and private keys with Puyyt Gen.
+     - Save both on your PC.
+     - Add the public key to the authorized_file on the server by:
+     	- `cd /~/.ssh`
+	- `nano authorized_keys`
+	- Exit. And,
+	- Add the Private key to your putty client. Make sure to add the 'Auto-login username' in the Data tab, under Connection.
+	- Try to login. You should be automatically logged in.
    `ssh root@ip`
      - **Update the sshd config file and prevent the use of password in login**
      - `cd /etc/ssh`
