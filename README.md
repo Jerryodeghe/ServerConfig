@@ -144,6 +144,16 @@ And edit as appropriate, e g:
    And lastly, migrate:
    - `php artisan migrate` <br />
   
+  12. **Update and Link Your Apache to the /public forlder**  <br />  
+  Laravel consumes all its public files including the index file from the /public folder. Lets tell apache to make this folder the main entry point.
+  - Go to Webmin. Under Servers, click on 'Apache Webserver'
+  -Look for the virtual server you are trying to edit, and click on it.
+  - Under the Path table, click on the path that looks like this: 'home/your-project/public_html/' and click on it.
+  - Look for "Edit Directives", and click on it.
+  - In the file that opens, look for 'DocumentRoot /home/scms/public_html/' and append 'public' to the path... like so:
+  - `DocumentRoot /home/scms/public_html/public`
+  - Press "Click and Save" and restart your apache like so:
+  - `/etc/init.d/apache2 restart`
 ## OPTIONAL SETUPS
 1. **Add bash aliases for shortcuts**  <br />  
    - Go to ` cd ~` and check if `.aliases` file is already on the server. To check, especially since this is a hidden file, simply `ls -A`
