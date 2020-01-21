@@ -37,14 +37,13 @@
    - `add-apt-repository ppa:ondrej/php && apt-get update`
    - `apt-get install php7.3 php7.3-mysql php7.3-cgi php7.3-cli php7.3-mbstring sudo php7.3-xml`
    - Sync up your server and bring virtualmin up to date by going to `System Settings -> Re-Check Config`
-   ** - To change another version globally, use:
+   - To change another version globally, use:
    	`sudo update-alternatives --config php`
 	Then select the version of choice.
-	
-3b. If apache is refusing to restart:
-Go to: `cd /etc/apache2`
-Then type `apache2ctl configtest`
-It will show you whats wrong with your config.
+    -If apache is refusing to restart:
+    Go to: `cd /etc/apache2`
+   Then type `apache2ctl configtest`
+   It will show you whats wrong with your config.<br />
 4. **Create a Virtualmin Server for your project:** 
 You will need a virtualmin ***virtual*** server for your project to get started. This will install your project's Home Directory, DNS, File Manager, Mails, etc. ***Home directory is usually at: /home/projectname/public_html***
 With Virtualmin, you can have as many projects as possible. <br />
