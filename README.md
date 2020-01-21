@@ -39,7 +39,7 @@
    - Sync up your server and bring virtualmin up to date by going to `System Settings -> Re-Check Config`
    - To change another version globally, use:
    	`sudo update-alternatives --config php`
-	Then select the version of choice.
+	Then select the version of choice.<br />
     -If apache is refusing to restart:
     Go to: `cd /etc/apache2`
    Then type `apache2ctl configtest`
